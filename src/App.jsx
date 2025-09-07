@@ -67,7 +67,13 @@ function App() {
 
 
     const handleDelete = id => {
-      setTasks(tasks.filter(task => task.id !== id))
+      const deleteMessage = confirm('Are you sure do you wanna delete this task?')
+
+      if(deleteMessage) {
+        setTasks(tasks.filter(task => task.id !== id))
+      } else{
+        return 
+      }
     }
 
 
