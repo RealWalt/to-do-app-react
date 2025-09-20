@@ -1,13 +1,15 @@
 
-const TaskList = ({tasks, setTasks, handleDelete}) => {
+const TaskList = ({tasks, setTasks, handleDelete, handleEdit}) => {
     
   return (
             <div className={tasks.length === 0 ? "text-center mt-3" : "mt-3 space-y-2"}>
                 {tasks.length === 0 ? ( 
+
                   <p className="font-bold uppercase">No tasks yet!</p>
-                ) : ( tasks.map(t => (
+                ) : ( tasks.map(t => ( 
                   <div key={t.id} className="bg-gray-800 p-2 rounded">
                     <p> <span className="font-bold uppercase p-2">Task: </span>{t.name}</p>
+                    <p> <span className="font-bold uppercase p-2">Category: </span> {t.category}</p>
                     <p className={t.completed ? "text-green-500 p-2 font-bold uppercase" : " text-red-500 p-2 font-bold uppercase"}><span className="font-bold uppercase text-white">Status: </span>{t.completed ? "Completed" : "Incomplete"}</p>
 
                     <div className="flex justify-between p-3">
@@ -21,14 +23,7 @@ const TaskList = ({tasks, setTasks, handleDelete}) => {
 
                         <button
                           className="bg-yellow-500 px-2 rounded text-lg hover:bg-yellow-600"
-                          onClick={() => {
-                            const newName = prompt("Enter the new task name", t.name);
-                            if (newName && newName.trim() !== "") {
-                              setTasks(tasks.map(task => task.id === t.id ? {...task, name: newName} : task))
-                            } else {
-                              return alert("Task name cannot be empty")
-                            }
-                          }}
+                          onClick={() => handleEdit(t.id)}
                         >Edit</button>
 
                       <button 
