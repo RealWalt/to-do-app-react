@@ -25,42 +25,48 @@ export const useTask = () => {
 
 
   const handleSubmit = e => {
-    e.preventDefault()
+  e.preventDefault()
 
-    const { name } = task;
+  const { name, category } = task;
 
-    if (name === "" || name.trim() === "") {
-       setAlerta({
-        msg: "Task name cannot be empty!", 
-        error: true})
-
-        setTimeout(() => {
-          setAlerta({})
-        }, 3000);
-        return
-    }
-    // Arregla el id para que no se repita
-    const newTask = {
-      ...task,
-      id: Date.now()
-    }
-
-    setTasks([...tasks, newTask]) // Agrega la nueva tarea al array de tareas
+  // Validación: si el nombre está vacío o solo tiene espacios
+  if (!name || !name.trim() || !category || !category.trim()) {
     setAlerta({
-      msg: "Task added succesfully!"
-    }) 
+      msg: "Task name cannot be empty!", 
+      error: true
+    })
 
     setTimeout(() => {
       setAlerta({})
-    }, 3000);
-    // Limpiar el formulario
-    setTask({
-      name: "",
-      completed: false,
-      id: Date.now(),
-      category: ''
-    })
+    }, 3000)
+    return
+  }
+
+  // Si pasa la validación, creamos nueva tarea
+  const newTask = {
+    ...task,
+    id: Date.now()
+  }
+
+  setTasks([...tasks, newTask]) // Agrega la nueva tarea
+  setAlerta({
+    msg: "Task added succesfully!"
+  }) 
+
+  setTimeout(() => {
+    setAlerta({})
+  }, 3000)
+
+  // Limpiar formulario
+  setTask({
+    name: "",
+    completed: false,
+    id: Date.now(),
+    category: ''
+  })
 }
+
+
 
 const handleEdit = (id) => {
   const taskToEdit = tasks.find(task => task.id === id);
