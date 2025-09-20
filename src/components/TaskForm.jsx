@@ -1,5 +1,4 @@
 
-import { useState } from "react"
 import Alerta from "./Alerta"
 
 const TaskForm = ({task, setTask, handleSubmit, alerta}) => {
@@ -18,6 +17,16 @@ const TaskForm = ({task, setTask, handleSubmit, alerta}) => {
               id="task"
               value={task.name}
               onChange={e => setTask({...task, name: e.target.value})}
+            />
+
+            <label htmlFor="task">Category:</label>
+            <input  
+              type="text"
+              placeholder="Add a new task"
+              className="w-full p-2 border border-gray-300 rounded mt-3 text-gray-900"
+              id="category"
+              value={task.category}
+              onChange={e => setTask({...task, category: e.target.value})}
             />
 
             <button
