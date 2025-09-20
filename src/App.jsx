@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useTask } from "./hooks/useTask"
 
 import Header from "./components/layout/Header"
 import TaskList from "./components/TaskList"
@@ -7,75 +7,7 @@ import Footer from "./components/layout/Footer"
 
 function App() {
 
-  const [task, setTask] = useState({
-    name: "",
-    completed: false,
-    id: Date.now()
-  })
-
-  //Carga las tareas del localStorage
-  const [tasks, setTasks] = useState(() => {
-    const storedTasks = localStorage.getItem('tasks')  
-    return storedTasks ? JSON.parse(storedTasks) : []
-  })
-
-  //State de Alerta
-  const [alerta, setAlerta] = useState({})
-
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks))  // guarda en el localStorage cada que se agrega una tarea
-  }, [tasks])
-
-
-
-  const handleSubmit = e => {
-    e.preventDefault()
-
-    const { name } = task;
-
-    if (name === "" || name.trim() === "") {
-       setAlerta({
-        msg: "Task name cannot be empty!", 
-        error: true})
-
-        setTimeout(() => {
-          setAlerta({})
-        }, 3000);
-        return
-    }
-    // Arregla el id para que no se repita
-    const newTask = {
-      ...task,
-      id: Date.now()
-    }
-
-    setTasks([...tasks, newTask]) // Agrega la nueva tarea al array de tareas
-    setAlerta({
-      msg: "Task added succesfully!"
-    }) 
-
-    setTimeout(() => {
-      setAlerta({})
-    }, 3000);
-    // Limpiar el formulario
-    setTask({
-      name: "",
-      completed: false,
-      id: Date.now()
-    })
-}
-
-
-    const handleDelete = id => {
-      const deleteMessage = confirm('Are you sure do you wanna delete this task?')
-
-      if(deleteMessage) {
-        setTasks(tasks.filter(task => task.id !== id))
-      } else{
-        return 
-      }
-    }
-
+  const { task, setTask, setTasks, tasks, alerta, handleSubmit, handleDelete, handleEdit} = useTask()
 
   return (
     <>
@@ -103,7 +35,12 @@ function App() {
 
               </div>
 
-              <TaskList tasks={tasks} setTasks={setTasks} handleDelete={handleDelete} />
+              <TaskList
+               tasks={tasks} 
+               setTasks={setTasks} 
+               handleDelete={handleDelete} 
+               handleEdit={handleEdit}
+               />
             </div>
         </main>
 
