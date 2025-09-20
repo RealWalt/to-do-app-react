@@ -22,7 +22,7 @@ const TaskForm = ({task, setTask, handleSubmit, alerta}) => {
             <label htmlFor="task">Category:</label>
             <input  
               type="text"
-              placeholder="Add a new task"
+              placeholder="Add a category for you task"
               className="w-full p-2 border border-gray-300 rounded mt-3 text-gray-900"
               id="category"
               value={task.category}
@@ -39,3 +39,4 @@ const TaskForm = ({task, setTask, handleSubmit, alerta}) => {
 }
 
 export default TaskForm
+
